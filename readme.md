@@ -1,93 +1,121 @@
 <img src="AKHRAIS HASNAE.jpg" style="height:464px;margin-right:432px"/>
         # 📊 Rapport de Projet : Analyse et Modélisation sur le Dataset UCI Mushroom
+# 📊 Rapport de Projet — Modélisation & Analyse de Données
 
-[![GitHub Repo stars](https://badgen.net/github/stars/yourusername/yourrepo)](https://github.com/yourusername/yourrepo)
-[![License](https://img.shields.io/github/license/yourusername/yourrepo)](https://github.com/yourusername/yourrepo/blob/main/LICENSE)
-
-## 📋 Introduction
-
-### Contexte
-Ce projet analyse le **dataset UCI Mushroom** (8124 échantillons, 22 variables catégorielles), un benchmark classique pour la classification binaire (comestible/toxique). Les données présentent un **déséquilibre de classes** (52% comestibles) et du **bruit potentiel** dans les features [file:1].
-
-### Problématique
-Développer un modèle de classification robuste capable de :
-- Gérer les variables catégorielles multiples
-- Surmonter le déséquilibre de classes
-- Atteindre >95% d'accuracy avec bonne généralisation
-
-### Objectifs
-1. **Nettoyage et préprocessing** des données
-2. **Sélection et optimisation** d'algorithmes ML
-3. **Évaluation complète** avec métriques multiples
-4. **Analyse des erreurs** via matrice de confusion [file:1]
-
-## 🛠️ Méthodologie
-
-### 1. Préprocessing des Données
-
-**Justification** : Les visualisations (histogrammes, boxplots) ont révélé une **asymétrie légère** et des outliers impactant les modèles linéaires [file:1].
-
-### 2. Sélection des Algorithmes
-| Algorithme | Justification | Hyperparamètres optimisés |
-|------------|---------------|---------------------------|
-| **Random Forest** | Robuste aux features catégorielles, gère le multicolinéarité | `n_estimators=200, max_depth=10` |
-| **SVM** | Efficace sur données transformées, bon margin | `C=1.0, kernel='rbf', gamma='scale'` |
-| **XGBoost** | Ensembling puissant, gestion native du déséquilibre | `learning_rate=0.1, n_estimators=100` |
-
-**Validation** : Cross-validation 5-fold avec GridSearchCV [file:1].
-
-### 3. Pipeline Technique
-
-**Justification** : Les visualisations (histogrammes, boxplots) ont révélé une **asymétrie légère** et des outliers impactant les modèles linéaires [file:1].
-
-## 📈 Résultats & Discussion
-
-### Performances du Meilleur Modèle (Random Forest)
-
-| Métrique     | Train   | Test    | Baseline |
-|--------------|---------|---------|----------|
-| **Accuracy** | **97.2%** | **95.8%** | 52%     |
-| **F1-Score** | **96.5%** | **94.7%** | 0.68    |
-| **ROC-AUC**  | **99.1%** | **98.3%** | 0.50    |
-| **RMSE**     | **0.12**  | **0.15**  | -       | [file:1]
-
-### 🔍 Analyse de la Matrice de Confusion
-
-**Erreurs principales** : Faux négatifs sur champignons toxiques présentant des features similaires aux comestibles (odeur, habitat) [file:1].
-
-### 📊 Feature Importance (Top 5)
-1. **odor** (0.42) - Odeur caractéristique
-2. **spore-print-color** (0.18)
-3. **gill-spacing** (0.12)
-4. **habitat** (0.09)
-5. **bruises** (0.07)
-
-## 🎯 Conclusion
-
-### Forces du Modèle
-- **Excellente discrimination** (ROC-AUC 98.3%)
-- **Bonne généralisation** (gap train/test <2%)
-- **Interprétabilité** via feature importance
-
-### Limites Identifiées
-- Sensibilité aux **outliers non capturés**
-- **Faux négatifs critiques** (sécurité alimentaire)
-- Généralisation limitée aux **nouveaux habitats**
-
-### Pistes d'Amélioration
-
-## 📚 Références
-- UCI Mushroom Dataset [file:1]
-- Scikit-learn Pipeline & SMOTE documentation [web:6]
-- Random Forest pour classification catégorielle [web:12]
+## Projet 3 — Hasnae Akhrais
 
 ---
 
-*Auteur : Hasnae AKHRAIS | Date : Décembre 2025 | [Notebook source](Projet3_AKHRAIS_HASNAE.ipynb)*
+## 1. Introduction
 
-<div align="center">
-  <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="Python">
-  <img src="https://img.shields.io/badge/scikit--learn-1.3-green" alt="Scikit-learn">
-  <img src="https://img.shields.io/badge/pandas-2.0-orange" alt="Pandas">
-</div>
+### 🎯 Contexte
+
+Ce projet s’inscrit dans le cadre d’un travail de modélisation prédictive visant à analyser un jeu de données dont l’objectif principal est de construire un modèle performant capable de prédire une variable cible à partir de données numériques et catégorielles.
+
+L’analyse est orientée machine learning et comprend exploration, nettoyage, traitement, entraînement et évaluation de plusieurs modèles.
+
+### ❓ Problématique
+
+Comment transformer un dataset brut, contenant des valeurs manquantes, des variables de types différents et potentiellement du bruit, en un modèle prédictif fiable et généralisable ?
+
+### 🎯 Objectifs
+
+* Comprendre la structure du dataset via une **analyse exploratoire (EDA)**.
+* Appliquer un **prétraitement rigoureux** : imputation, encodage, standardisation.
+* Comparer différents **algorithmes de machine learning**.
+* Évaluer les performances via des **métriques adaptées** (Accuracy, F1-score, ROC-AUC, RMSE).
+* Identifier les **erreurs** du modèle et discuter de ses limites.
+
+---
+
+## 2. Méthodologie
+
+### 🧼 2.1 Nettoyage & Prétraitement
+
+✔ **Imputation KNN**
+Le choix du `KNNImputer` pour les variables numériques se justifie par sa capacité à reconstruire les valeurs manquantes en se basant sur la similarité des observations. Contrairement à une moyenne ou médiane, KNN préserve mieux la structure multivariée.
+
+✔ **Encodage des variables catégorielles**
+Les modèles nécessitant des entrées numériques, un encodage (One-Hot Encoding ou équivalent) a été appliqué.
+Ce choix garantit que les relations non ordinales entre catégories ne sont pas mal interprétées.
+
+✔ **Standardisation**
+La normalisation des variables numériques a été appliquée afin d’améliorer les performances de modèles sensibles à l’échelle (KNN, SVM, régression logistique…).
+
+---
+
+### 🤖 2.2 Choix des Algorithmes
+
+Plusieurs modèles ont été testés pour comparer différents comportements :
+
+* **Régression Logistique** → baseline robuste, interprétable, adaptée aux problèmes linéaires.
+* **Random Forest / XGBoost** → modèles plus puissants, capables de gérer des relations non linéaires.
+* **KNN** → benchmark simple basé sur la proximité.
+* **SVM** → performant sur les datasets propres et bien standardisés.
+
+Le choix final du modèle se base sur la validation croisée, l’analyse des métriques et la capacité du modèle à généraliser.
+
+---
+
+### 🧪 2.3 Validation & Optimisation
+
+* Utilisation de **KFold** pour réduire la variance de l’évaluation.
+* Recherche d’hyperparamètres via **GridSearchCV**.
+* Séparation standard en **train/test** pour mesurer la performance finale.
+
+---
+
+## 3. Résultats & Discussion
+
+### 📈 3.1 Métriques de performance
+
+Selon les résultats obtenus dans le notebook, les métriques principales incluent :
+
+* **Accuracy** : mesure globale de bonnes prédictions.
+* **F1-Score** : pertinent en cas de classes déséquilibrées.
+* **ROC-AUC** : évalue la capacité discriminative du modèle.
+* **RMSE** (si applicable à un modèle de régression).
+
+Les modèles d’ensemble (Random Forest, XGBoost) tendent généralement à obtenir les meilleurs scores grâce à leur robustesse et leur capacité à capturer des relations complexes.
+
+---
+
+### 🧩 3.2 Analyse des erreurs
+
+L’analyse de la **matrice de confusion** met en évidence :
+
+* Les types d’erreurs les plus fréquents (faux positifs / faux négatifs).
+* Les classes que le modèle a du mal à distinguer.
+
+Cela permet d’identifier :
+
+* Les caractéristiques mal apprises.
+* La nécessité potentielle d’un rééquilibrage (SMOTE, pénalisation…).
+* Des pistes d’amélioration de la qualité des données.
+
+---
+
+## 4. Conclusion
+
+### ✔️ Limites du Modèle
+
+* Sensibilité possible aux valeurs aberrantes malgré l’imputation.
+* Performances dépendantes de la qualité du preprocessing.
+* Difficulté à généraliser si les données sont déséquilibrées ou insuffisantes.
+* Risque de surapprentissage avec certains modèles complexes (Random Forest, XGBoost).
+
+### 🚀 Pistes d’Amélioration
+
+* Tester d’autres techniques d’équilibrage de classes.
+* Ajouter une sélection ou extraction de features (PCA, tests statistiques).
+* Collecter davantage de données ou enrichir les variables.
+* Tester des modèles plus récents (LightGBM, CatBoost).
+* Optimiser plus finement les hyperparamètres.
+
+---
+
+## 🖋️ Auteur
+
+Projet réalisé par **Hasnae Akhrais** dans le cadre du Projet 3.
+
 
